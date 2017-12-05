@@ -9,22 +9,22 @@ library(AICcmodavg)
 library(maptools)
 
 # Step 1 - load sighting data with GPS points and date and time and species
-setwd("c:/Varsity Work/Projects/Camera Traps/Nyathi - 2013")
-sight <- read.csv("Daysall.csv",header=T)
+setwd(choose.dir())
+sight <- read.csv("sightingsdata.csv",header=T)
 
-# Step 2 - Convert sighting data time to the correct format
+# Step 2 - Convert sighting data time to the correct format (need to check the format of the date and time)
 time.sight <- as.POSIXct(strptime(
   paste(sight$Date), 
   format="%Y-%m-%d"),  tz="Africa/Johannesburg")
 sight2 <- data.frame(sight,time.sight)
 
-# Step 3 - Convert sighting data GPS coordinates to correct format
+# Step 3 - Convert sighting data GPS coordinates to correct format (need to check the format of the long and lat)
 proj.sight <- project(as.matrix(sight[,c("Longitude","Latitude")]),"+proj=utm +south +zone=36 +ellps=WGS84")
 sight3 <- data.frame(sight2,proj.sight)
 
 # Step 4 - load lion data and wild dog data with coordinates and time
 setwd(choose.dir())
-lions <- read.csv("jess.csv",header=T)
+lions <- read.csv("predatordata.csv",header=T)
 
 # Step 5 - Convert predator data time to the correct format
 time.lion <- as.POSIXct(strptime(
